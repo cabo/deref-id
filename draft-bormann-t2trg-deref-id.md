@@ -13,8 +13,8 @@ stream: IRTF
 wg: Thing-to-Thing Research Group
 
 venue:
-  mail: t2trg@ietf.org
-  github: cabo/deref-id
+  mail: "t2trg@irtf.org"
+  github: "cabo/deref-id"
 
 author:
   -
