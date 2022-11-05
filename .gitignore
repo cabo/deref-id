@@ -12,12 +12,10 @@
 /.targets.mk
 /.venv/
 /.vscode/
-/lib
 /node_modules/
 /versioned/
 Gemfile.lock
 archive.json
-draft-bormann-t2trg-deref-id.xml
 package-lock.json
 report.xml
 !requirements.txt
