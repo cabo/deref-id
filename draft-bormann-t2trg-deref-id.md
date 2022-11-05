@@ -4,7 +4,7 @@ v: 3
 title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
-docname: draft-bormann-t2trg-deref-id-00
+docname: draft-bormann-t2trg-deref-id-latest
 date: 2022-11-05
 
 keyword: Internet-Draft
