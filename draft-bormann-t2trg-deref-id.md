@@ -31,7 +31,6 @@ informative:
   JSO: I-D.bhutton-json-schema-01
   PROBLEM: I-D.ietf-httpapi-rfc7807bis-04
 
-
 ...
 
 --- abstract
