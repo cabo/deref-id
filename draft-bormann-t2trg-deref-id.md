@@ -28,6 +28,7 @@ author:
     email: cabo@tzi.org
 
 informative:
+  TAG: RFC4151
   JSO: I-D.bhutton-json-schema-01
   PROBLEM: I-D.ietf-httpapi-rfc7807bis-04
 
@@ -39,7 +40,7 @@ In a protocol or an application environment, it is often important to
 be able to create unambiguous identifiers for some meaning (concept or
 some entity).
 
-Due to the simplicity of create URIs, these have become popular for
+Due to the simplicity of creating URIs, these have become popular for
 this purpose.
 Beyond the purpose of identifiers to be uniquely associated with a
 meaning, some of these URIs are in principle *dereferenceable*, so
@@ -61,6 +62,11 @@ Introduction        {#intro}
 Examples for "dereferenceable identifiers" {#examples}
 ======================
 
+This section is intended to present a number of examples where
+dereferenceable identifiers are in use in a protocol, including
+existing discussion about constraints on their usage, the benefits
+claimed for this constrained usage, and remaining issues.
+
 Protocol and Protocol Version identifiers
 -----------------------------------------
 
@@ -69,8 +75,8 @@ version identifier in the heading to a data item.
 
 E.g., {{JSO}} defines a language for data models that contain an
 identifier to the language version in use, here
-https://json-schema.org/draft/2020-12/schema.
-The model that can be retrieved from this URI in turn contained
+`https://json-schema.org/draft/2020-12/schema`.
+The model that can be retrieved from this URI in turn contains
 further dereferenceable identifiers that point to further details.
 
 {{Section 8.1.1 of JSO}} has this:
@@ -82,14 +88,16 @@ further dereferenceable identifiers that point to further details.
 
 So it acknowledges that the dereferenceability is optional, but does
 place further restrictions on what can be the result of a successful
-dereference.
+dereference: another one of these data models, which in turn contain
+further dereferenceable identifiers.
 
 Concept identifiers
 -------------------
 
-{{PROBLEM}} uses a dereferenceable identifier for its "type" field.
+The _problem details_ format {{PROBLEM}} uses a dereferenceable
+identifier for its "type" field.
 The value is a URI that "identifies the specific "problem type" (e.g.,
-"out of credit")" {{Section 1 of PROBLEM}}.
+"out of credit")" ({{Section 1 of PROBLEM}}).
 
 {{Section 3.1.1 of PROBLEM}} has this:
 
@@ -125,14 +133,15 @@ gives this advice:
 
 A reference to the place where registrations for these items are
 managed is certainly desirable, however, the implications on the
-management of fragment identifiers in the HTML documents the IANA
-generates are an example for the increased complexity dereferenceable
-identifiers may place on the owners of the URI space used.
+management of fragment identifiers in the HTML documents that IANA
+generates from registration information are an example for the
+increased complexity dereferenceable identifiers may place on the
+owners of the URI space employed.
 
 MORE EXAMPLES
 -------------
 
-There are a lot of examples in published RFCs; add them to this document.
+There are a lot more examples in published RFCs; add them to this document.
 
 Pitfalls
 ========
@@ -140,9 +149,9 @@ Pitfalls
 Server overload
 ---------------
 
-If a data item containing a dereferenceable identifier becomes widely
-distributed, naive implementations that handle such a data item might
-reference it out of a routine operation.
+If a data item containing dereferenceable identifier(s) becomes
+widely distributed, naive implementations that handle such a data item
+might dereference these identifiers as part of a routine operation.
 Many definitions of dereferenceable identifiers contain admonitions
 that such a behavior can cause an implosion of requests on the
 server(s) for the URI.
@@ -150,29 +159,36 @@ server(s) for the URI.
 Longevity of identifiers
 ------------------------
 
-URIs contain domain names, whose ownership can change.
-Parts of the name space of an origin may come under new
-administration, which can change the policies
+Dereferenceable URIs usually contain domain names, whose ownership can
+change.
+As a result, and for other reasons as well, parts of the name space of
+an origin may come under new administration, which can change the
+policies that apply to resources made available there.
 
-While these are problems of URIs in general (and can be mitigated by
-going to a non-dereferenceable URI), the problem is exacerbated by the
-use as a dereferenceable identifier.  The new owner/administrator
-might more easily accept that a certain chunk of their URI space
-should not be used than that certain content is to be offered their
-(potentially presenting non-trivial loads plus some update traffic).
+These are problems of such URIs in general (and can be mitigated by
+going to a non-dereferenceable kind of URIs such as one based on the
+'tag' uri scheme {{TAG}}).
+However, the problems are exacerbated by their use as a dereferenceable
+identifier.
+The new owner/administrator might more easily accept that a certain
+chunk of their URI space should not be used (which suffices for a
+non-dereferenceable identifier based on this kind of URI namespace)
+than that certain content needs to be offered there (potentially
+presenting non-trivial loads, some mechanisms needed to update that
+information, and legal liabilities that are hard to assess).
 
 Redirect ambiguities
 --------------------
 
 Dereferencing an identifier may involve following some redirections;
-whether that is actually desired (or desirable) is rarely being
-discussed.
+whether that following is actually implied, or desired (or even
+desirable) is rarely being discussed.
 
 IANA Considerations
 ==================
 
 This document makes no concrete requests on IANA, but does point out
-that IANA might be a good target for a certain class of
+that IANA resources might be a good target for a certain class of
 dereferenceable identifiers.
 
 Security considerations
@@ -180,8 +196,11 @@ Security considerations
 
 The ability to create a denial of service attack by pointing a
 dereferenceable identifier into a popular data item that is widely
-distributed is discussed in {{examples}}, alongside with some
-recommendations on mitigating such attacks.
+distributed is implied by the discussion in {{examples}}, alongside with
+some recommendations for implementers that would mitigate such attacks.
+A problem with such recommendations is that they need to be followed
+by implementations that are using dereferenceable identifiers, which
+might not care much.
 
 --- back
 
@@ -192,4 +211,6 @@ Acknowledgements
 {{{Christian Amsüss}}} pointed out that this document would be good to have.
 
 <!--  LocalWords:  dereference dereferenceability dereferenceable
+ -->
+<!--  LocalWords:  mitigations
  -->
