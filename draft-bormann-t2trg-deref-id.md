@@ -70,7 +70,33 @@ Dereferenceable
 
 Dereference
 
-Operator
+*Information*:
+: The information that is retrieved by dereferencing a dereferenceable
+  identifier.
+
+Operator:
+: Dereferencing requires some server infrastructure to actually
+  provide the *information*.
+  Simplifying the potential complexity of this infrastructure, the
+  entity (entities) controlling the operation of this server
+  infrastructure, including the name spaces in use (e.g., DNS names,
+  URI paths on a server) are called the operator(s) of the
+  dereferenceable identifier.
+
+Directed:
+: A directed identifier is an identifier that has been specifically
+  minted to not just identify the intended entity, but also context
+  information such as the intended use, or intended consumer of the
+  identifier.
+: Directed *information* is *information* that is tailored to the implicit
+  context of a specific dereferencing access, such as the accessing IP
+  address or other ancillary parameters.
+  (Content negotiation alone is not "directed *information*", as it is
+  explicitly triggered by the dereferencing entity.)
+
+Unique:
+: A unique identifier is an identifier that is unique for the entity;
+  i.e., no other identifiers are in use (or intended to be in use).
 
 Examples for "dereferenceable identifiers" {#examples}
 ======================
