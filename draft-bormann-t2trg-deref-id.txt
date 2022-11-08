@@ -84,7 +84,8 @@ Table of Contents
      3.3.  Redirect ambiguities
    4.  IANA Considerations
    5.  Security considerations
-   6.  Informative References
+   6.  Privacy considerations
+   7.  Informative References
    Acknowledgements
    Author's Address
 
@@ -213,7 +214,20 @@ Table of Contents
    followed by implementations that are using dereferenceable
    identifiers, which might not care much.
 
-6.  Informative References
+6.  Privacy considerations
+
+   Dereferencing an identifier leaves a wide-spread data trail, ranging
+   from host name lookups visible on the network to the absolute URI
+   (i.e., the URI without its fragment identifier) visible to the
+   operator of the identifier.  Moreover, the operator might gain
+   additional data about the requester, e.g. from a User-Agent header.
+
+   By minting single-use dereferencable identifiers and assigning short
+   cache lifetimes to the dereferenced resource, the originator of a
+   document can track dereferencing clients whenever they processes the
+   document the identifier has been created for.
+
+7.  Informative References
 
    [JSO]      Wright, A., Andrews, H., Hutton, B., and G. Dennis, "JSON
               Schema: A Media Type for Describing JSON Documents", Work
