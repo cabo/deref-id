@@ -74,6 +74,7 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
+     1.1.  Terminology
    2.  Examples for "dereferenceable identifiers"
      2.1.  Protocol and Protocol Version identifiers
      2.2.  Concept identifiers
@@ -92,6 +93,16 @@ Table of Contents
 1.  Introduction
 
    (Please see abstract.)
+
+1.1.  Terminology
+
+   Identifier
+
+   Dereferenceable
+
+   Dereference
+
+   Operator
 
 2.  Examples for "dereferenceable identifiers"
 
