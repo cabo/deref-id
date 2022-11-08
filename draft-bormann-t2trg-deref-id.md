@@ -59,6 +59,17 @@ Introduction        {#intro}
 
 (Please see abstract.)
 
+Terminology
+-----------
+
+Identifier
+
+Dereferenceable
+
+Dereference
+
+Operator
+
 Examples for "dereferenceable identifiers" {#examples}
 ======================
 
