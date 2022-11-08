@@ -202,6 +202,22 @@ A problem with such recommendations is that they need to be followed
 by implementations that are using dereferenceable identifiers, which
 might not care much.
 
+Privacy considerations
+======================
+
+Dereferencing an identifier leaves a wide-spread data trail,
+ranging from host name lookups visible on the network
+to the absolute URI
+(i.e., the URI without its fragment identifier)
+visible to the operator of the identifier.
+Moreover, the operator might gain additional data about the requester,
+e.g. from a User-Agent header.
+
+By minting single-use dereferencable identifiers
+and assigning short cache lifetimes to the dereferenced resource,
+the originator of a document can track dereferencing clients
+whenever they processes the document the identifier has been created for.
+
 --- back
 
 Acknowledgements
