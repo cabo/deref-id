@@ -213,10 +213,10 @@ visible to the operator of the identifier.
 Moreover, the operator might gain additional data about the requester,
 e.g. from a User-Agent header.
 
-By minting single-use dereferencable identifiers
+By minting directed (e.g., single-use) dereferencable identifiers
 and assigning short cache lifetimes to the dereferenced resource,
 the originator of a document can track dereferencing clients
-whenever they processes the document the identifier has been created for.
+whenever they process the document the identifier has been created for.
 
 --- back
 
