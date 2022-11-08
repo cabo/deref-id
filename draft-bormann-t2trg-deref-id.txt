@@ -4,8 +4,8 @@
 
 Thing-to-Thing Research Group                                 C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                           5 November 2022
-Expires: 9 May 2023
+Intended status: Informational                                 C. Amsüss
+Expires: 9 May 2023                                      5 November 2022
 
 
                 The "dereferenceable identifier" pattern
@@ -88,7 +88,7 @@ Table of Contents
    6.  Privacy considerations
    7.  Informative References
    Acknowledgements
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -261,7 +261,7 @@ Acknowledgements
    Christian Amsüss pointed out that this document would be good to
    have.
 
-Author's Address
+Authors' Addresses
 
    Carsten Bormann
    Universität Bremen TZI
@@ -270,3 +270,8 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
+
+   Christian Amsüss
+   Austria
+   Email: christian@amsuess.com
