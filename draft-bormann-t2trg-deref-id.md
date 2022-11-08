@@ -17,8 +17,7 @@ venue:
   github: "cabo/deref-id"
 
 author:
-  -
-    name: Carsten Bormann
+  - name: Carsten Bormann
     org: Universität Bremen TZI
     street: Postfach 330440
     city: Bremen
@@ -26,6 +25,9 @@ author:
     country: Germany
     phone: +49-421-218-63921
     email: cabo@tzi.org
+  - name: Christian Amsüss
+    country: Austria
+    email: christian@amsuess.com
 
 informative:
   TAG: RFC4151
