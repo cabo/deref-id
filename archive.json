@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-11-08T01:10:38.399705+00:00",
+  "timestamp": "2022-11-10T01:12:02.371497+00:00",
   "repo": "cabo/deref-id",
   "labels": [
     {
@@ -73,24 +73,26 @@
       "id": "PR_kwDOIYMczs5CXiFO",
       "title": "Add section on privacy",
       "url": "https://github.com/cabo/deref-id/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chrysn",
-      "authorAssociation": "NONE",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The document doesn't cover the privacy aspect yet at all; I consider that aspect the most important reason why identifier consumers shouldn't even get any ideas about dereferencing identifiers.",
       "createdAt": "2022-11-07T23:21:36Z",
-      "updatedAt": "2022-11-07T23:21:36Z",
+      "updatedAt": "2022-11-08T14:49:55Z",
       "baseRepository": "cabo/deref-id",
       "baseRefName": "main",
       "baseRefOid": "6060c226686f4ae165645e8236acc39ce4bdba35",
       "headRepository": "chrysn-pull-requests/deref-id",
       "headRefName": "privacy",
       "headRefOid": "68eb43bc751371f32ef12e01fb0e897e2a1bbf3d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-11-08T08:48:48Z",
+      "mergedAt": "2022-11-08T08:48:48Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "3d434c12c083da8858d6ed117213e17463d01b8d"
+      },
       "comments": [],
       "reviews": []
     }
