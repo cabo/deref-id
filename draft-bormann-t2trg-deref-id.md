@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2022-11-05
+date: 2023-05-09
 
 keyword: Internet-Draft
 cat: info
@@ -32,7 +32,12 @@ author:
 informative:
   TAG: RFC4151
   JSO: I-D.bhutton-json-schema-01
-  PROBLEM: I-D.ietf-httpapi-rfc7807bis-04
+  PROBLEM: I-D.ietf-httpapi-rfc7807bis-07
+  HTML5:
+    title: "HTML — Living Standard"
+    target: https://html.spec.whatwg.org
+    author:
+      org: WHATWG
 
 ...
 
@@ -167,8 +172,7 @@ gives this advice:
 
 {:quote}
 >
-   Registrations MAY use the prefix "https://iana.org/assignments/http-
-   problem-types#" for the type URI.
+   Registrations MAY use the prefix "https://iana.org/assignments/http-problem-types#" for the type URI.
 
 A reference to the place where registrations for these items are
 managed is certainly desirable, however, the implications on the
