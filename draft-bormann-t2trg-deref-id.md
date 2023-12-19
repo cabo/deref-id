@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2023-05-09
+date: 2023-12-19
 
 keyword: Internet-Draft
 cat: info
@@ -32,7 +32,7 @@ author:
 informative:
   TAG: RFC4151
   JSO: I-D.bhutton-json-schema-01
-  PROBLEM: I-D.ietf-httpapi-rfc7807bis-07
+  PROBLEM: RFC9457
   HTML5:
     title: "HTML — Living Standard"
     target: https://html.spec.whatwg.org
@@ -54,10 +54,12 @@ meaning, some of these URIs are in principle *dereferenceable*, so
 something can be placed that can be retrieved when encountering such a
 URI.
 
-The present -00 version is a stub to draw some attention to the
-opportunity that this pattern would benefit from a common description,
-documenting its benefits and pitfalls, and some mitigations for the
-latter.
+[^status]
+
+[^status]: The present -01 version is a stub to draw some attention to the
+    opportunity that this pattern would benefit from a common description,
+    documenting its benefits and pitfalls, and some mitigations for the
+    latter.
 
 --- middle
 
@@ -138,7 +140,7 @@ further dereferenceable identifiers.
 Concept identifiers
 -------------------
 
-The _problem details_ format {{PROBLEM}} uses a dereferenceable
+The _Problem Details for HTTP APIs_ format {{PROBLEM}} uses a dereferenceable
 identifier for its "type" field.
 The value is a URI that "identifies the specific "problem type" (e.g.,
 "out of credit")" ({{Section 1 of PROBLEM}}).
@@ -147,7 +149,7 @@ The value is a URI that "identifies the specific "problem type" (e.g.,
 
 {:quote}
 >
-   If the type URI is a locator (e.g., those with a "http" or "https"
+   If the type URI is a locator (e.g., those with an "http" or "https"
    scheme), dereferencing it SHOULD provide human-readable documentation
    for the problem type (e.g., using HTML [HTML5]).
 
@@ -160,14 +162,14 @@ However, consumers
    when providing information to developers (e.g., when a debugging tool
    is in use).
 
-{{Section 5 of PROBLEM}} further details:
+{{Section 4 of PROBLEM}} further details:
 
 {:quote}
 >
-   A problem's type URI SHOULD resolve to HTML [HTML5] documentation
+   A problem type URI SHOULD resolve to HTML [HTML5] documentation
    that explains how to resolve the problem.
 
-This becomes even more interesting as {{Section 5.2 of PROBLEM}} then
+This becomes even more interesting as {{Section 4.2 of PROBLEM}} then
 gives this advice:
 
 {:quote}
