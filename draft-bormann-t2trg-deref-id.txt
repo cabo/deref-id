@@ -5,7 +5,7 @@
 Thing-to-Thing Research Group                                 C. Bormann
 Internet-Draft                                    Universität Bremen TZI
 Intended status: Informational                                 C. Amsüss
-Expires: 10 November 2023                                     9 May 2023
+Expires: 21 June 2024                                   19 December 2023
 
 
                 The "dereferenceable identifier" pattern
@@ -23,10 +23,11 @@ Abstract
    _dereferenceable_, so something can be placed that can be retrieved
    when encountering such a URI.
 
-   The present -00 version is a stub to draw some attention to the
-   opportunity that this pattern would benefit from a common
-   description, documenting its benefits and pitfalls, and some
-   mitigations for the latter.
+
+   // The present -01 version is a stub to draw some attention to the
+   // opportunity that this pattern would benefit from a common
+   // description, documenting its benefits and pitfalls, and some
+   // mitigations for the latter.
 
 About This Document
 
@@ -58,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 November 2023.
+   This Internet-Draft will expire on 21 June 2024.
 
 Copyright Notice
 
@@ -157,15 +158,15 @@ Table of Contents
 
 2.2.  Concept identifiers
 
-   The _problem details_ format [PROBLEM] uses a dereferenceable
-   identifier for its "type" field.  The value is a URI that "identifies
-   the specific "problem type" (e.g., "out of credit")" (Section 1 of
-   [PROBLEM]).
+   The _Problem Details for HTTP APIs_ format [PROBLEM] uses a
+   dereferenceable identifier for its "type" field.  The value is a URI
+   that "identifies the specific "problem type" (e.g., "out of credit")"
+   (Section 1 of [PROBLEM]).
 
    Section 3.1.1 of [PROBLEM] has this:
 
-   |  If the type URI is a locator (e.g., those with a "http" or "https"
-   |  scheme), dereferencing it SHOULD provide human-readable
+   |  If the type URI is a locator (e.g., those with an "http" or
+   |  "https" scheme), dereferencing it SHOULD provide human-readable
    |  documentation for the problem type (e.g., using HTML [HTML5]).
 
    but then warns:
@@ -174,12 +175,12 @@ Table of Contents
    |  URI, unless they do so when providing information to developers
    |  (e.g., when a debugging tool is in use).
 
-   Section 5 of [PROBLEM] further details:
+   Section 4 of [PROBLEM] further details:
 
-   |  A problem's type URI SHOULD resolve to HTML [HTML5] documentation
+   |  A problem type URI SHOULD resolve to HTML [HTML5] documentation
    |  that explains how to resolve the problem.
 
-   This becomes even more interesting as Section 5.2 of [PROBLEM] then
+   This becomes even more interesting as Section 4.2 of [PROBLEM] then
    gives this advice:
 
    |  Registrations MAY use the prefix "https://iana.org/assignments/
@@ -273,10 +274,8 @@ Table of Contents
               draft-bhutton-json-schema-01>.
 
    [PROBLEM]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
-              for HTTP APIs", Work in Progress, Internet-Draft, draft-
-              ietf-httpapi-rfc7807bis-07, 28 April 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-
-              rfc7807bis-07>.
+              for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
+              <https://www.rfc-editor.org/rfc/rfc9457>.
 
    [TAG]      Kindberg, T. and S. Hawke, "The 'tag' URI Scheme",
               RFC 4151, DOI 10.17487/RFC4151, October 2005,
