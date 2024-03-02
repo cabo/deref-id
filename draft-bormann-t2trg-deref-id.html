@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>The "dereferenceable identifier" pattern</title>
+<meta content="Carsten Bormann" name="author">
+<meta content="Christian Amsüss" name="author">
+<meta content="
+       In a protocol or an application environment, it is often important to
+be able to create unambiguous identifiers for some meaning (concept or
+some entity). 
+       Due to the simplicity of creating URIs, these have become popular for
+this purpose.
+Beyond the purpose of identifiers to be uniquely associated with a
+meaning, some of these URIs are in principle  dereferenceable , so
+something can be placed that can be retrieved when encountering such a
+URI. 
+       The present -03 revision discusses the continuum between
+entirely relying on the result of dereferencing an identifier and
+building in knowledge of all expected identifiers, and it mentions
+further pitfalls of using dereferenceable identifiers. 
+    " name="description">
+<meta content="xml2rfc 3.19.4" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-bormann-t2trg-deref-id-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.19.4
+    Python 3.11.6
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 4.2.0
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.31.0
+    setuptools 68.2.2
+    six 1.16.0
+    wcwidth 0.2.13
+-->
+<link href="draft-bormann-t2trg-deref-id.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">dereferenceable identifiers</td>
+<td class="right">March 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Bormann &amp; Amsüss</td>
+<td class="center">Expires 3 September 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Thing-to-Thing Research Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-bormann-t2trg-deref-id-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-03-02" class="published">2 March 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-09-03">3 September 2024</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">C. Bormann</div>
+<div class="org">Universität Bremen TZI</div>
+</div>
+<div class="author">
+      <div class="author-name">C. Amsüss</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">The "dereferenceable identifier" pattern</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">In a protocol or an application environment, it is often important to
+be able to create unambiguous identifiers for some meaning (concept or
+some entity).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Due to the simplicity of creating URIs, these have become popular for
+this purpose.
+Beyond the purpose of identifiers to be uniquely associated with a
+meaning, some of these URIs are in principle <em>dereferenceable</em>, so
+something can be placed that can be retrieved when encountering such a
+URI.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3"><span class="cref" id="status">The present -03 revision discusses the continuum between
+entirely relying on the result of dereferencing an identifier and
+building in knowledge of all expected identifiers, and it mentions
+further pitfalls of using dereferenceable identifiers.</span><a href="#section-abstract-3" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-bormann-t2trg-deref-id/">https://datatracker.ietf.org/doc/draft-bormann-t2trg-deref-id/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        t2trg Research Group mailing list (<span><a href="mailto:t2trg@irtf.org">mailto:t2trg@irtf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/t2trg/">https://mailarchive.ietf.org/arch/browse/t2trg/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/t2trg/">https://www.ietf.org/mailman/listinfo/t2trg/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/cabo/deref-id">https://github.com/cabo/deref-id</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 3 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-examples-for-dereferenceabl" class="internal xref">Examples for "dereferenceable identifiers"</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-protocol-and-protocol-versi" class="internal xref">Protocol and Protocol Version identifiers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-concept-identifiers" class="internal xref">Concept identifiers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-more-examples" class="internal xref">MORE EXAMPLES</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-pitfalls" class="internal xref">Pitfalls</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-server-overload" class="internal xref">Server overload</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-longevity-of-identifiers" class="internal xref">Longevity of identifiers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-breakage-due-to-incompatibl" class="internal xref">Breakage due to incompatible changes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-redirect-ambiguities" class="internal xref">Redirect ambiguities</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-other-pitfalls" class="internal xref">Other pitfalls</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-usage-patterns-between-dere" class="internal xref">Usage patterns between dereferencing and precise matching</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="intro">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">(Please see abstract.)<a href="#section-1-1" class="pilcrow">¶</a></p>
+<div id="terminology">
+<section id="section-1.1">
+        <h3 id="name-terminology">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.1-1">Identifier<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Dereferenceable<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Dereference<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-1.1-4">
+          <dt id="section-1.1-4.1">
+<em>Information</em>:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.2">
+            <p id="section-1.1-4.2.1">The information that is retrieved by dereferencing a dereferenceable
+identifier.<a href="#section-1.1-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.1-4.3">Operator:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.4">
+            <p id="section-1.1-4.4.1">Dereferencing requires some server infrastructure to actually
+provide the <em>information</em>.
+Simplifying the potential complexity of this infrastructure, the
+entity (entities) controlling the operation of this server
+infrastructure, including the name spaces in use (e.g., DNS names,
+URI paths on a server) are called the operator(s) of the
+dereferenceable identifier.<a href="#section-1.1-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.1-4.5">Consumer:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.6">
+            <p id="section-1.1-4.6.1">An entity that receives data containing a dereferenceable identifier.<a href="#section-1.1-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.1-4.7">Directed:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.8">
+            <p id="section-1.1-4.8.1">A directed identifier is an identifier that has been specifically
+minted to not just identify the intended entity, but also context
+information such as the intended use, or intended consumer of the
+identifier.<a href="#section-1.1-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.1-4.9"></dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.10">
+            <p id="section-1.1-4.10.1">Directed <em>information</em> is <em>information</em> that is tailored to the implicit
+context of a specific dereferencing access, such as the accessing IP
+address or other ancillary parameters.
+(Content negotiation alone is not "directed <em>information</em>", as it is
+explicitly triggered by the dereferencing entity.)<a href="#section-1.1-4.10.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.1-4.11">Unique:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.1-4.12">
+            <p id="section-1.1-4.12.1">A unique identifier is an identifier that is unique for the entity;
+i.e., no other identifiers are in use (or intended to be in use).<a href="#section-1.1-4.12.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-1.1-5">{::boilerplate bcp14-tagged-bcp}<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="examples">
+<section id="section-2">
+      <h2 id="name-examples-for-dereferenceabl">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-examples-for-dereferenceabl" class="section-name selfRef">Examples for "dereferenceable identifiers"</a>
+      </h2>
+<p id="section-2-1">This section is intended to present a number of examples where
+dereferenceable identifiers are in use in a protocol, including
+existing discussion about constraints on their usage, the benefits
+claimed for this constrained usage, and remaining issues.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="protocol-and-protocol-version-identifiers">
+<section id="section-2.1">
+        <h3 id="name-protocol-and-protocol-versi">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-protocol-and-protocol-versi" class="section-name selfRef">Protocol and Protocol Version identifiers</a>
+        </h3>
+<p id="section-2.1-1">Many protocols based on XML or JSON include a protocol or protocol
+version identifier in the heading to a data item.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">E.g., <span>[<a href="#JSO" class="cite xref">JSO</a>]</span> defines a language for data models that contain an
+identifier to the language version in use, here
+<code>https://json-schema.org/draft/2020-12/schema</code>.
+The model that can be retrieved from this URI in turn contains
+further dereferenceable identifiers that point to further details.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3"><span><a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#section-8.1.1" class="relref">Section 8.1.1</a> of [<a href="#JSO" class="cite xref">JSO</a>]</span> has this:<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<blockquote id="section-2.1-4">
+          <p id="section-2.1-4.1">If this URI identifies a retrievable resource, that resource SHOULD
+   be of media type "application/schema+json".<a href="#section-2.1-4.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-2.1-5">So it acknowledges that the dereferenceability is optional, but does
+place further restrictions on what can be the result of a successful
+dereference: another one of these data models, which in turn contain
+further dereferenceable identifiers.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="concept-identifiers">
+<section id="section-2.2">
+        <h3 id="name-concept-identifiers">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-concept-identifiers" class="section-name selfRef">Concept identifiers</a>
+        </h3>
+<p id="section-2.2-1">The <em>Problem Details for HTTP APIs</em> format <span>[<a href="#PROBLEM" class="cite xref">PROBLEM</a>]</span> uses a dereferenceable
+identifier for its "type" field.
+The value is a URI that "identifies the specific "problem type" (e.g.,
+"out of credit")" (<span><a href="https://rfc-editor.org/rfc/rfc9457#section-1" class="relref">Section 1</a> of [<a href="#PROBLEM" class="cite xref">PROBLEM</a>]</span>).<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2"><span><a href="https://rfc-editor.org/rfc/rfc9457#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#PROBLEM" class="cite xref">PROBLEM</a>]</span> has this:<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<blockquote id="section-2.2-3">
+          <p id="section-2.2-3.1">If the type URI is a locator (e.g., those with an "http" or "https"
+   scheme), dereferencing it SHOULD provide human-readable documentation
+   for the problem type (e.g., using HTML <span>[<a href="#HTML5" class="cite xref">HTML5</a>]</span>).<a href="#section-2.2-3.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-2.2-4">but then warns:<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<blockquote id="section-2.2-5">
+          <p id="section-2.2-5.1">However, consumers
+   SHOULD NOT automatically dereference the type URI, unless they do so
+   when providing information to developers (e.g., when a debugging tool
+   is in use).<a href="#section-2.2-5.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-2.2-6"><span><a href="https://rfc-editor.org/rfc/rfc9457#section-4" class="relref">Section 4</a> of [<a href="#PROBLEM" class="cite xref">PROBLEM</a>]</span> further details:<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<blockquote id="section-2.2-7">
+          <p id="section-2.2-7.1">A problem type URI SHOULD resolve to HTML <span>[<a href="#HTML5" class="cite xref">HTML5</a>]</span> documentation
+   that explains how to resolve the problem.<a href="#section-2.2-7.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-2.2-8">This becomes even more interesting as <span><a href="https://rfc-editor.org/rfc/rfc9457#section-4.2" class="relref">Section 4.2</a> of [<a href="#PROBLEM" class="cite xref">PROBLEM</a>]</span> then
+gives this advice:<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<blockquote id="section-2.2-9">
+          <p id="section-2.2-9.1">Registrations MAY use the prefix "https://iana.org/assignments/http-problem-types#" for the type URI.<a href="#section-2.2-9.1" class="pilcrow">¶</a></p>
+</blockquote>
+<p id="section-2.2-10">A reference to the place where registrations for these items are
+managed is certainly desirable, however, the implications on the
+management of fragment identifiers in the HTML documents that IANA
+generates from registration information are an example for the
+increased complexity dereferenceable identifiers may place on the
+owners of the URI space employed.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="more-examples">
+<section id="section-2.3">
+        <h3 id="name-more-examples">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-more-examples" class="section-name selfRef">MORE EXAMPLES</a>
+        </h3>
+<p id="section-2.3-1">There are a lot more examples in published RFCs; add them to this document.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="pitfalls">
+<section id="section-3">
+      <h2 id="name-pitfalls">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-pitfalls" class="section-name selfRef">Pitfalls</a>
+      </h2>
+<div id="server-overload">
+<section id="section-3.1">
+        <h3 id="name-server-overload">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-server-overload" class="section-name selfRef">Server overload</a>
+        </h3>
+<p id="section-3.1-1">If a data item containing dereferenceable identifier(s) becomes
+widely distributed, naive implementations that handle such a data item
+might dereference these identifiers as part of a routine operation.
+Many definitions of dereferenceable identifiers contain admonitions
+that such a behavior can cause an implosion of requests on the
+server(s) for the URI.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="longevity-of-identifiers">
+<section id="section-3.2">
+        <h3 id="name-longevity-of-identifiers">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-longevity-of-identifiers" class="section-name selfRef">Longevity of identifiers</a>
+        </h3>
+<p id="section-3.2-1">Dereferenceable URIs usually contain domain names, whose ownership can
+change.
+As a result, and for other reasons as well, parts of the name space of
+an origin may come under new administration, which can change the
+policies that apply to resources made available there.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">These are problems of such URIs in general (and can be mitigated by
+going to a non-dereferenceable kind of URIs such as one based on the
+'tag' uri scheme <span>[<a href="#TAG" class="cite xref">TAG</a>]</span>).
+However, the problems are exacerbated by their use as a dereferenceable
+identifier.
+The new owner/administrator might more easily accept that a certain
+chunk of their URI space should not be used (which suffices for a
+non-dereferenceable identifier based on this kind of URI namespace)
+than that certain content needs to be offered there (potentially
+presenting non-trivial loads, some mechanisms needed to update that
+information, and legal liabilities that are hard to assess).<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="breakage-due-to-incompatible-changes">
+<section id="section-3.3">
+        <h3 id="name-breakage-due-to-incompatibl">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-breakage-due-to-incompatibl" class="section-name selfRef">Breakage due to incompatible changes</a>
+        </h3>
+<p id="section-3.3-1">Dereferencing an identifier may produce different representations over time.
+While these changes may be intentional and beneficial
+(e.g. because terms are compatibly added to a resource describing terms that are evolved together <span>[<a href="#COOL" class="cite xref">COOL</a>]</span>),
+they can also cause breakage in applications
+that previously dereferenced the identifier successfully:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-2.1">
+            <p id="section-3.3-2.1.1">There can be errors in the representation introduced by the change.<a href="#section-3.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.2">
+            <p id="section-3.3-2.2.1">The operator and the consumer may disagree about what constitutes a compatible change.<a href="#section-3.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.3">
+            <p id="section-3.3-2.3.1">An updated representation may exceed the consumer's capabilities,
+e.g. not fitting in an allocated buffer.<a href="#section-3.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.4">
+            <p id="section-3.3-2.4.1">Even without intended changes to the representation,
+changes to the channel may exclude certain consumers.
+For example, the operator's web server may cease to accept the cipher suites implemented in the consumer.<a href="#section-3.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.5">
+            <p id="section-3.3-2.5.1">When the operator's services are compromised,
+there may be malicious changes in the representation.<a href="#section-3.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="redirect-ambiguities">
+<section id="section-3.4">
+        <h3 id="name-redirect-ambiguities">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-redirect-ambiguities" class="section-name selfRef">Redirect ambiguities</a>
+        </h3>
+<p id="section-3.4-1">Dereferencing an identifier may involve following some redirections;
+whether that following is actually implied, or desired (or even
+desirable) is rarely being discussed.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="other-pitfalls">
+<section id="section-3.5">
+        <h3 id="name-other-pitfalls">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-other-pitfalls" class="section-name selfRef">Other pitfalls</a>
+        </h3>
+<p id="section-3.5-1">Denial of service attacks are discussed in <a href="#seccons" class="auto internal xref">Section 6</a>.
+Privacy implications, in particular around single-use identifiers, are discussed in <a href="#privcons" class="auto internal xref">Section 7</a>.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="usage-patterns-between-dereferencing-and-precise-matching">
+<section id="section-4">
+      <h2 id="name-usage-patterns-between-dere">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-usage-patterns-between-dere" class="section-name selfRef">Usage patterns between dereferencing and precise matching</a>
+      </h2>
+<p id="section-4-1">Consumers do not face a binary choice between dereferencing dereferenceable identifiers and treating them as opaque.
+The space between those extremes is continuous.
+Notable steps consumers can take to mitigate pitfalls of dereferencing are:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4-2">
+<li id="section-4-2.1">
+          <p id="section-4-2.1.1">Consumers that dereference may apply caching,
+which reduces server load and bridges both outages and misconfigurations on the server side.<a href="#section-4-2.1.1" class="pilcrow">¶</a></p>
+<p id="section-4-2.1.2">
+These caches may adhere to the caching rules of the underlying systems
+(DNS result life times, HTTP's freshness rules),
+but may also stretch them if the alternative are failures or treating the identifier as opaque.<a href="#section-4-2.1.2" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-4-2.2">
+          <p id="section-4-2.2.1">Consumers may use caching proxy services provided by trusted parties.<a href="#section-4-2.2.1" class="pilcrow">¶</a></p>
+<p id="section-4-2.2.2">
+While this increases the susceptibility to service outages,
+it immediately mitigates the privacy implications of having the consumer's network address visible to the operator.
+Restrictive policies at the proxy can further mitigate other issues.
+For example, if the proxy's cache is eagerly populated by web spider operations from public starting points
+and only ever serves cached results to consumers,
+it defends against single-use URIs.<a href="#section-4-2.2.2" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-4-2.3">
+          <p id="section-4-2.3.1">Consumer caches may be pre-populated as part of their firmware update mechanisms.<a href="#section-4-2.3.1" class="pilcrow">¶</a></p>
+<p id="section-4-2.3.2">
+In its extreme form, the consumer may not even be equipped to dereference any identifiers
+outside of its cache,
+and the dereferenced representation may already be part of the firmware in ingested form to save runtime resources.
+Such a consumer shares its properties with a consumer that treats dereferenceable identifiers as opaque.
+However, the authors of the firmware can make good use of the dereferenceable identifiers.
+For example, they can dereference a known (or spidered) set of identifiers in an automated fashion,
+with any suitable amount of caching or manual verification.<a href="#section-4-2.3.2" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-5">
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-5-1">This document makes no concrete requests on IANA, but does point out
+that IANA resources might be a good target for a certain class of
+dereferenceable identifiers.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="seccons">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
+      </h2>
+<p id="section-6-1">The ability to create a denial of service attack by pointing a
+dereferenceable identifier into a popular data item that is widely
+distributed is implied by the discussion in <a href="#examples" class="auto internal xref">Section 2</a>, alongside with
+some recommendations for implementers that would mitigate such attacks.
+A problem with such recommendations is that they need to be followed
+by implementations that are using dereferenceable identifiers, which
+might not care much.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privcons">
+<section id="section-7">
+      <h2 id="name-privacy-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy considerations</a>
+      </h2>
+<p id="section-7-1">Dereferencing an identifier leaves a wide-spread data trail,
+ranging from host name lookups visible on the network
+to the absolute URI
+(i.e., the URI without its fragment identifier)
+visible to the operator of the identifier.
+Moreover, the operator might gain additional data about the requester,
+e.g. from a User-Agent header.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">By minting directed (e.g., single-use) dereferenceable identifiers
+and assigning short cache lifetimes to the dereferenced resource,
+the originator of a document can track dereferencing clients
+whenever they process the document the identifier has been created for.
+Moreover, single-use identifiers can also be used to exfiltrate data
+from originators whose network access is restricted through dereferencing clients.<a href="#section-7-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-8">
+      <h2 id="name-informative-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      </h2>
+<dl class="references">
+<dt id="COOL">[COOL]</dt>
+      <dd>
+<span class="refAuthor">Sauermann, L.</span> and <span class="refAuthor">R. Cyganiak</span>, <span class="refTitle">"Cool URIs for the Semantic Web"</span>, <time datetime="2008-12-03" class="refDate">3 December 2008</time>, <span>&lt;<a href="https://www.w3.org/TR/cooluris/">https://www.w3.org/TR/cooluris/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HTML5">[HTML5]</dt>
+      <dd>
+<span class="refAuthor">WHATWG</span>, <span class="refTitle">"HTML — Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://html.spec.whatwg.org">https://html.spec.whatwg.org</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="JSO">[JSO]</dt>
+      <dd>
+<span class="refAuthor">Wright, A.</span>, <span class="refAuthor">Andrews, H.</span>, <span class="refAuthor">Hutton, B.</span>, and <span class="refAuthor">G. Dennis</span>, <span class="refTitle">"JSON Schema: A Media Type for Describing JSON Documents"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bhutton-json-schema-01</span>, <time datetime="2022-06-10" class="refDate">10 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01">https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="PROBLEM">[PROBLEM]</dt>
+      <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TAG">[TAG]</dt>
+    <dd>
+<span class="refAuthor">Kindberg, T.</span> and <span class="refAuthor">S. Hawke</span>, <span class="refTitle">"The 'tag' URI Scheme"</span>, <span class="seriesInfo">RFC 4151</span>, <span class="seriesInfo">DOI 10.17487/RFC4151</span>, <time datetime="2005-10" class="refDate">October 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4151">https://www.rfc-editor.org/rfc/rfc4151</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-A">
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-A-1"><span class="contact-name">Christian Amsüss</span> pointed out that this document would be good to have.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-B">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Carsten Bormann</span></div>
+<div dir="auto" class="left"><span class="org">Universität Bremen TZI</span></div>
+<div dir="auto" class="left"><span class="street-address">Postfach 330440</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">D-28359</span> <span class="locality">Bremen</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="tel">
+<span>Phone:</span>
+<a href="tel:+49-421-218-63921" class="tel">+49-421-218-63921</a>
+</div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:cabo@tzi.org" class="email">cabo@tzi.org</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Christian Amsüss</span></div>
+<div dir="auto" class="left"><span class="country-name">Austria</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:christian@amsuess.com" class="email">christian@amsuess.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
