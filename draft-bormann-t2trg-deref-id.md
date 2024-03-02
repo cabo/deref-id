@@ -323,6 +323,8 @@ By minting directed (e.g., single-use) dereferencable identifiers
 and assigning short cache lifetimes to the dereferenced resource,
 the originator of a document can track dereferencing clients
 whenever they process the document the identifier has been created for.
+Moreover, single-use identifiers can also be used to exfiltrate data
+from originators whose network access is restricted through dereferencing clients.
 
 --- back
 
