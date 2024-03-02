@@ -38,6 +38,13 @@ informative:
     target: https://html.spec.whatwg.org
     author:
       org: WHATWG
+  COOL:
+    title: Cool URIs for the Semantic Web
+    author:
+      - name: Leo Sauermann
+      - name: Richard Cyganiak
+    target: https://www.w3.org/TR/cooluris/
+    date: 2008-12-03
 
 ...
 
@@ -89,6 +96,9 @@ Operator:
   infrastructure, including the name spaces in use (e.g., DNS names,
   URI paths on a server) are called the operator(s) of the
   dereferenceable identifier.
+
+Consumer:
+: An entity that receives data containing a dereferenceable identifier.
 
 Directed:
 : A directed identifier is an identifier that has been specifically
@@ -222,12 +232,70 @@ than that certain content needs to be offered there (potentially
 presenting non-trivial loads, some mechanisms needed to update that
 information, and legal liabilities that are hard to assess).
 
+Breakage due to incompatible changes
+------------------------------------
+
+Dereferencing an identifier may produce different representations over time.
+While these changes may be intentional and beneficial
+(e.g. because terms are compatibly added to a resource describing terms that are evolved together {{COOL}}),
+they can also cause breakage in applications
+that previously dereferenced the identifier successfully:
+
+* There can be errors in the representation introduced by the change.
+* The operator and the consumer may disagree about what constitutes a compatible change.
+* An updated representation may exceed the consumer's capabilities,
+  e.g. not fitting in an allocated buffer.
+* Even without intended changes to the representation,
+  changes to the channel may exclude certain consumers.
+  For example, the operator's web server may cease to accept the cipher suites implemented in the consumer.
+* When the operator's services are compromised,
+  there may be malicious changes in the representation.
+
 Redirect ambiguities
 --------------------
 
 Dereferencing an identifier may involve following some redirections;
 whether that following is actually implied, or desired (or even
 desirable) is rarely being discussed.
+
+Other pitfalls
+--------------
+
+Denial of service attacks are discussed in {{seccons}}.
+Privacy implications, in particular around single-use identifiers, are discussed in {{privcons}}.
+
+Usage patterns between dereferencing and precise matching
+=========================================================
+
+Consumers do not face a binary choice between dereferencing dereferenceable identifiers and treating them as opaque.
+The space between those extremes is continuous.
+Notable steps consumers can take to mitigate pitfalls of dereferencing are:
+
+1. Consumers that dereference may apply caching,
+   which reduces server load and bridges both outages and misconfigurations on the server side.
+
+   These caches may adhere to the caching rules of the underlying systems
+   (DNS result life times, HTTP's freshness rules),
+   but may also stretch them if the alternative are failures or treating the identifier as opaque.
+
+2. Consumers may use caching proxy services provided by trusted parties.
+
+   While this increases the susceptibility to service outages,
+   it immediately mitigates the privacy implications of having the consumer's network address visible to the operator.
+   Restrictive policies at the proxy can further mitigate other issues.
+   For example, if the proxy's cache is eagerly populated by web spider operations from public starting points
+   and only ever serves cached results to consumers,
+   it defends against single-use URIs.
+
+3. Consumer caches may be pre-populated as part of their firmware update mechanisms.
+
+   In its extreme form, the consumer may not even be equipped to dereference any identifiers
+   outside of its cache,
+   and the dereferenced representation may already be part of the firmware in ingested form to save runtime resources.
+   Such a consumer shares its properties with a consumer that treats dereferenceable identifiers as opaque.
+   However, the authors of the firmware can make good use of the dereferenceable identifiers.
+   For example, they can dereference a known (or spidered) set of identifiers in an automated fashion,
+   with any suitable amount of caching or manual verification.
 
 IANA Considerations
 ==================
@@ -236,7 +304,7 @@ This document makes no concrete requests on IANA, but does point out
 that IANA resources might be a good target for a certain class of
 dereferenceable identifiers.
 
-Security considerations
+Security considerations {#seccons}
 =======================
 
 The ability to create a denial of service attack by pointing a
@@ -247,7 +315,7 @@ A problem with such recommendations is that they need to be followed
 by implementations that are using dereferenceable identifiers, which
 might not care much.
 
-Privacy considerations
+Privacy considerations {#privcons}
 ======================
 
 Dereferencing an identifier leaves a wide-spread data trail,
@@ -258,10 +326,12 @@ visible to the operator of the identifier.
 Moreover, the operator might gain additional data about the requester,
 e.g. from a User-Agent header.
 
-By minting directed (e.g., single-use) dereferencable identifiers
+By minting directed (e.g., single-use) dereferenceable identifiers
 and assigning short cache lifetimes to the dereferenced resource,
 the originator of a document can track dereferencing clients
 whenever they process the document the identifier has been created for.
+Moreover, single-use identifiers can also be used to exfiltrate data
+from originators whose network access is restricted through dereferencing clients.
 
 --- back
 
