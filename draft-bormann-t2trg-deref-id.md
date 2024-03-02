@@ -291,7 +291,7 @@ Some points on that way are these:
 
    In its extreme form, the consumer may not even be equipped to dereference any identifiers
    outside of its cache,
-   and the dereferenced representation may already be part of the firmware in ingested form.
+   and the dereferenced representation may already be part of the firmware in ingested form to save runtime resources.
    Such a consumer shares its properties with a consumer that treats dereferencable identifiers as opaque.
    However, the authors of the firmware can make good use of the dereferencable identifiers.
    For example, they can dereference a known (or spidered) set of identifiers in an automated fashion,
