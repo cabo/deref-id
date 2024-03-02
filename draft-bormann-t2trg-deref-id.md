@@ -41,7 +41,8 @@ informative:
   COOL:
     title: Cool URIs for the Semantic Web
     author:
-      name: Leo Sauermann, Richard Cyganiak
+      - name: Leo Sauermann
+      - name: Richard Cyganiak
     target: https://www.w3.org/TR/cooluris/
     date: 2008-12-03
 
