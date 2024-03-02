@@ -269,7 +269,7 @@ Usage patterns between dereferencing and precise matching
 
 Consumers do not face a binary choice between dereferencing dereferencable identifiers and treating them as opaque.
 The space between those extremes is continuous.
-Some points on that way are these:
+Notable steps consumers can take to mitigate pitfalls of dereferencing are:
 
 1. Consumers that dereference may apply caching,
    which reduces server load and bridges both outages and misconfigurations on the server side.
