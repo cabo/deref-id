@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2023-12-19
+date: 2024-03-02
 
 keyword: Internet-Draft
 cat: info
@@ -114,6 +114,8 @@ Directed:
 Unique:
 : A unique identifier is an identifier that is unique for the entity;
   i.e., no other identifiers are in use (or intended to be in use).
+
+{::boilerplate bcp14-tagged-bcp}
 
 Examples for "dereferenceable identifiers" {#examples}
 ======================
