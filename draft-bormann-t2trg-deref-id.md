@@ -276,7 +276,7 @@ Some points on that way are these:
 
   These caches may adhere to the caching rules of the underlying systems
   (DNS result life times, HTTP's freshness rules),
-  but may also exceed them if the alternative are failures or treating the identifier as opaque.
+  but may also stretch them if the alternative are failures or treating the identifier as opaque.
 
 * Consumers may use caching proxy services provided by trusted parties.
 
