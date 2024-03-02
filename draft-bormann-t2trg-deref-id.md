@@ -262,7 +262,7 @@ Other pitfalls
 --------------
 
 Denial of service attacks are discussed in {{seccons}}.
-Privacy implications, in particular around single-use identifiers, are discussed in {{privcons}}
+Privacy implications, in particular around single-use identifiers, are discussed in {{privcons}}.
 
 Usage patterns between dereferencing and precise matching
 =========================================================
