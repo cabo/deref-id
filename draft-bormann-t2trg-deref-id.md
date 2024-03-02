@@ -257,6 +257,39 @@ Dereferencing an identifier may involve following some redirections;
 whether that following is actually implied, or desired (or even
 desirable) is rarely being discussed.
 
+Usage patterns between dereferencing and precise matching
+=========================================================
+
+Consumers do not face a binary choice between dereferencing dereferencable identifiers and treating them as opaque.
+The space between those extremes is continuous.
+Some points on that way are these:
+
+* Consumers that dereference may apply caching,
+  which reduces server load and bridges both outages and misconfigurations on the server side.
+
+  These caches may adhere to the caching rules of the underlying systems
+  (DNS result life times, HTTP's freshness rules),
+  but may also exceed them if the alternative are failures or treating the identifier as opaque.
+
+* Consumers may use caching proxy services provided by trusted parties.
+
+  While this increases the susceptibility to service outages,
+  it immediately mitigates the privacy implications of having the consumer's network address visible to the operator.
+  Restrictive policies at the proxy can further mitigate other issues.
+  For example, if the proxy's cache is eagerly populated by web spider operations from public starting points
+  and only ever serves cached results to consumers,
+  it defends against single-use URIs.
+
+* Consumer caches may be pre-populated as part of their firmware update mechanisms.
+
+  In its extreme form, the consumer may not even be equipped to dereference any identifiers
+  outside of its cache,
+  and the dereferenced representation may already be part of the firmware in ingested form.
+  Such a consumer shares its properties with a consumer that treats dereferencable identifiers as opaque.
+  However, the authors of the firmware can make good use of the dereferencable identifiers.
+  For example, they can dereference a known (or spidered) set of identifiers in an automated fashion,
+  with any suitable amount of caching or manual verification.
+
 IANA Considerations
 ==================
 
