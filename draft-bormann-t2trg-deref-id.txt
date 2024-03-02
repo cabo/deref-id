@@ -83,26 +83,26 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Examples for "dereferenceable identifiers"  . . . . . . . . .   3
-     2.1.  Protocol and Protocol Version identifiers . . . . . . . .   3
+     2.1.  Protocol and Protocol Version identifiers . . . . . . . .   4
      2.2.  Concept identifiers . . . . . . . . . . . . . . . . . . .   4
      2.3.  MORE EXAMPLES . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Pitfalls  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      3.1.  Server overload . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Longevity of identifiers  . . . . . . . . . . . . . . . .   5
-     3.3.  Redirect ambiguities  . . . . . . . . . . . . . . . . . .   5
-   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Security considerations . . . . . . . . . . . . . . . . . . .   6
-   6.  Privacy considerations  . . . . . . . . . . . . . . . . . . .   6
-   7.  Informative References  . . . . . . . . . . . . . . . . . . .   6
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.3.  Breakage due to incompatible changes  . . . . . . . . . .   6
+     3.4.  Redirect ambiguities  . . . . . . . . . . . . . . . . . .   6
+     3.5.  Other pitfalls  . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Usage patterns between dereferencing and precise matching . .   6
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   6.  Security considerations . . . . . . . . . . . . . . . . . . .   7
+   7.  Privacy considerations  . . . . . . . . . . . . . . . . . . .   8
+   8.  Informative References  . . . . . . . . . . . . . . . . . . .   8
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   8
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
-1.  Introduction
-
-   (Please see abstract.)
 
 
 
@@ -113,6 +113,10 @@ Bormann & Amsüss          Expires 21 June 2024                  [Page 2]
 
 Internet-Draft         dereferenceable identifiers         December 2023
 
+
+1.  Introduction
+
+   (Please see abstract.)
 
 1.1.  Terminology
 
@@ -131,6 +135,9 @@ Internet-Draft         dereferenceable identifiers         December 2023
       controlling the operation of this server infrastructure, including
       the name spaces in use (e.g., DNS names, URI paths on a server)
       are called the operator(s) of the dereferenceable identifier.
+
+   Consumer:  An entity that receives data containing a dereferenceable
+      identifier.
 
    Directed:  A directed identifier is an identifier that has been
       specifically minted to not just identify the intended entity, but
@@ -154,13 +161,6 @@ Internet-Draft         dereferenceable identifiers         December 2023
    existing discussion about constraints on their usage, the benefits
    claimed for this constrained usage, and remaining issues.
 
-2.1.  Protocol and Protocol Version identifiers
-
-   Many protocols based on XML or JSON include a protocol or protocol
-   version identifier in the heading to a data item.
-
-
-
 
 
 
@@ -169,6 +169,11 @@ Bormann & Amsüss          Expires 21 June 2024                  [Page 3]
 
 Internet-Draft         dereferenceable identifiers         December 2023
 
+
+2.1.  Protocol and Protocol Version identifiers
+
+   Many protocols based on XML or JSON include a protocol or protocol
+   version identifier in the heading to a data item.
 
    E.g., [JSO] defines a language for data models that contain an
    identifier to the language version in use, here https://json-
@@ -213,11 +218,6 @@ Internet-Draft         dereferenceable identifiers         December 2023
    This becomes even more interesting as Section 4.2 of [PROBLEM] then
    gives this advice:
 
-   |  Registrations MAY use the prefix "https://iana.org/assignments/
-   |  http-problem-types#" for the type URI.
-
-
-
 
 
 
@@ -225,6 +225,9 @@ Bormann & Amsüss          Expires 21 June 2024                  [Page 4]
 
 Internet-Draft         dereferenceable identifiers         December 2023
 
+
+   |  Registrations MAY use the prefix "https://iana.org/assignments/
+   |  http-problem-types#" for the type URI.
 
    A reference to the place where registrations for these items are
    managed is certainly desirable, however, the implications on the
@@ -267,11 +270,8 @@ Internet-Draft         dereferenceable identifiers         December 2023
    presenting non-trivial loads, some mechanisms needed to update that
    information, and legal liabilities that are hard to assess).
 
-3.3.  Redirect ambiguities
 
-   Dereferencing an identifier may involve following some redirections;
-   whether that following is actually implied, or desired (or even
-   desirable) is rarely being discussed.
+
 
 
 
@@ -282,13 +282,99 @@ Bormann & Amsüss          Expires 21 June 2024                  [Page 5]
 Internet-Draft         dereferenceable identifiers         December 2023
 
 
-4.  IANA Considerations
+3.3.  Breakage due to incompatible changes
+
+   Dereferencing an identifier may produce different representations
+   over time.  While these changes may be intentional and beneficial
+   (e.g. because terms are compatibly added to a resource describing
+   terms that are evolved together [COOL]), they can also cause breakage
+   in applications that previously dereferenced the identifier
+   successfully:
+
+   *  There can be errors in the representation introduced by the
+      change.
+
+   *  The operator and the consumer may disagree about what constitutes
+      a compatible change.
+
+   *  An updated representation may exceed the consumer's capabilities,
+      e.g. not fitting in an allocated buffer.
+
+   *  Even without intended changes to the representation, changes to
+      the channel may exclude certain consumers.  For example, the
+      operator's web server may cease to accept the cipher suites
+      implemented in the consumer.
+
+   *  When the operator's services are compromised, there may be
+      malicious changes in the representation.
+
+3.4.  Redirect ambiguities
+
+   Dereferencing an identifier may involve following some redirections;
+   whether that following is actually implied, or desired (or even
+   desirable) is rarely being discussed.
+
+3.5.  Other pitfalls
+
+   Denial of service attacks are discussed in Section 6.  Privacy
+   implications, in particular around single-use identifiers, are
+   discussed in Section 7.
+
+4.  Usage patterns between dereferencing and precise matching
+
+   Consumers do not face a binary choice between dereferencing
+   dereferenceable identifiers and treating them as opaque.  The space
+   between those extremes is continuous.  Notable steps consumers can
+   take to mitigate pitfalls of dereferencing are:
+
+   1.  Consumers that dereference may apply caching, which reduces
+       server load and bridges both outages and misconfigurations on the
+       server side.
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 6]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
+
+       These caches may adhere to the caching rules of the underlying
+       systems (DNS result life times, HTTP's freshness rules), but may
+       also stretch them if the alternative are failures or treating the
+       identifier as opaque.
+
+   2.  Consumers may use caching proxy services provided by trusted
+       parties.
+
+       While this increases the susceptibility to service outages, it
+       immediately mitigates the privacy implications of having the
+       consumer's network address visible to the operator.  Restrictive
+       policies at the proxy can further mitigate other issues.  For
+       example, if the proxy's cache is eagerly populated by web spider
+       operations from public starting points and only ever serves
+       cached results to consumers, it defends against single-use URIs.
+
+   3.  Consumer caches may be pre-populated as part of their firmware
+       update mechanisms.
+
+       In its extreme form, the consumer may not even be equipped to
+       dereference any identifiers outside of its cache, and the
+       dereferenced representation may already be part of the firmware
+       in ingested form to save runtime resources.  Such a consumer
+       shares its properties with a consumer that treats dereferenceable
+       identifiers as opaque.  However, the authors of the firmware can
+       make good use of the dereferenceable identifiers.  For example,
+       they can dereference a known (or spidered) set of identifiers in
+       an automated fashion, with any suitable amount of caching or
+       manual verification.
+
+5.  IANA Considerations
 
    This document makes no concrete requests on IANA, but does point out
    that IANA resources might be a good target for a certain class of
    dereferenceable identifiers.
 
-5.  Security considerations
+6.  Security considerations
 
    The ability to create a denial of service attack by pointing a
    dereferenceable identifier into a popular data item that is widely
@@ -298,7 +384,17 @@ Internet-Draft         dereferenceable identifiers         December 2023
    followed by implementations that are using dereferenceable
    identifiers, which might not care much.
 
-6.  Privacy considerations
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 7]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
+
+7.  Privacy considerations
 
    Dereferencing an identifier leaves a wide-spread data trail, ranging
    from host name lookups visible on the network to the absolute URI
@@ -306,12 +402,18 @@ Internet-Draft         dereferenceable identifiers         December 2023
    operator of the identifier.  Moreover, the operator might gain
    additional data about the requester, e.g. from a User-Agent header.
 
-   By minting directed (e.g., single-use) dereferencable identifiers and
-   assigning short cache lifetimes to the dereferenced resource, the
+   By minting directed (e.g., single-use) dereferenceable identifiers
+   and assigning short cache lifetimes to the dereferenced resource, the
    originator of a document can track dereferencing clients whenever
    they process the document the identifier has been created for.
+   Moreover, single-use identifiers can also be used to exfiltrate data
+   from originators whose network access is restricted through
+   dereferencing clients.
 
-7.  Informative References
+8.  Informative References
+
+   [COOL]     Sauermann, L. and R. Cyganiak, "Cool URIs for the Semantic
+              Web", 3 December 2008, <https://www.w3.org/TR/cooluris/>.
 
    [HTML5]    WHATWG, "HTML — Living Standard", n.d.,
               <https://html.spec.whatwg.org>.
@@ -330,20 +432,23 @@ Internet-Draft         dereferenceable identifiers         December 2023
               RFC 4151, DOI 10.17487/RFC4151, October 2005,
               <https://www.rfc-editor.org/rfc/rfc4151>.
 
-
-
-
-Bormann & Amsüss          Expires 21 June 2024                  [Page 6]
-
-Internet-Draft         dereferenceable identifiers         December 2023
-
-
 Acknowledgements
 
    Christian Amsüss pointed out that this document would be good to
    have.
 
 Authors' Addresses
+
+
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 8]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
 
    Carsten Bormann
    Universität Bremen TZI
@@ -389,4 +494,11 @@ Authors' Addresses
 
 
 
-Bormann & Amsüss          Expires 21 June 2024                  [Page 7]
+
+
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 9]
