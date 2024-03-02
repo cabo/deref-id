@@ -63,10 +63,10 @@ URI.
 
 [^status]
 
-[^status]: The present -01 version is a stub to draw some attention to the
-    opportunity that this pattern would benefit from a common description,
-    documenting its benefits and pitfalls, and some mitigations for the
-    latter.
+[^status]: The present -03 revision discusses the continuum between
+    entirely relying on the result of dereferencing an identifier and
+    building in knowledge of all expected identifiers, and it mentions
+    further pitfalls of using dereferenceable identifiers.
 
 --- middle
 
