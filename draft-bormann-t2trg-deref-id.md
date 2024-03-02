@@ -38,6 +38,12 @@ informative:
     target: https://html.spec.whatwg.org
     author:
       org: WHATWG
+  COOL:
+    title: Cool URIs for the Semantic Web
+    author:
+      name: Leo Sauermann, Richard Cyganiak
+    target: https://www.w3.org/TR/cooluris/
+    date: 2008-12-03
 
 ...
 
@@ -89,6 +95,9 @@ Operator:
   infrastructure, including the name spaces in use (e.g., DNS names,
   URI paths on a server) are called the operator(s) of the
   dereferenceable identifier.
+
+Consumer:
+: An entity that receives data containing a dereferencable identifier.
 
 Directed:
 : A directed identifier is an identifier that has been specifically
@@ -221,6 +230,25 @@ non-dereferenceable identifier based on this kind of URI namespace)
 than that certain content needs to be offered there (potentially
 presenting non-trivial loads, some mechanisms needed to update that
 information, and legal liabilities that are hard to assess).
+
+Breakage due to incompatible changes
+------------------------------------
+
+Dereferencing an identifier may produce different representations over time.
+While these changes may be intentional and beneficial
+(e.g. because terms are compatibly added to a resource describing terms that are evolved together {{COOL}}),
+they can also cause breakage in applications
+that previously dereferenced the identifier successfully:
+
+* There can be errors in the representation introduced by the change.
+* The operator and the consumer may disagree about what constitutes a compatible change.
+* An updated representation may exceed the consumer's capabilities,
+  e.g. not fitting in an allocated buffer.
+* Even without intended changes to the representation,
+  changes to the channel may exclude certain consumers.
+  For example, the operator's web server may cease to accept the cipher suites implemented in the consumer.
+* When the operator's services are compromised,
+  there may be malicious changes in the representation.
 
 Redirect ambiguities
 --------------------
