@@ -257,6 +257,12 @@ Dereferencing an identifier may involve following some redirections;
 whether that following is actually implied, or desired (or even
 desirable) is rarely being discussed.
 
+Other pitfalls
+--------------
+
+Denial of service attacks are discussed in {{seccons}}.
+Privacy implications, in particular around single-use identifiers, are discussed in {{privcons}}
+
 Usage patterns between dereferencing and precise matching
 =========================================================
 
@@ -297,7 +303,7 @@ This document makes no concrete requests on IANA, but does point out
 that IANA resources might be a good target for a certain class of
 dereferenceable identifiers.
 
-Security considerations
+Security considerations {#seccons}
 =======================
 
 The ability to create a denial of service attack by pointing a
@@ -308,7 +314,7 @@ A problem with such recommendations is that they need to be followed
 by implementations that are using dereferenceable identifiers, which
 might not care much.
 
-Privacy considerations
+Privacy considerations {#privcons}
 ======================
 
 Dereferencing an identifier leaves a wide-spread data trail,
