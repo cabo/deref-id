@@ -49,6 +49,15 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 1]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
+
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
@@ -74,26 +83,36 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-     1.1.  Terminology
-   2.  Examples for "dereferenceable identifiers"
-     2.1.  Protocol and Protocol Version identifiers
-     2.2.  Concept identifiers
-     2.3.  MORE EXAMPLES
-   3.  Pitfalls
-     3.1.  Server overload
-     3.2.  Longevity of identifiers
-     3.3.  Redirect ambiguities
-   4.  IANA Considerations
-   5.  Security considerations
-   6.  Privacy considerations
-   7.  Informative References
-   Acknowledgements
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Examples for "dereferenceable identifiers"  . . . . . . . . .   3
+     2.1.  Protocol and Protocol Version identifiers . . . . . . . .   3
+     2.2.  Concept identifiers . . . . . . . . . . . . . . . . . . .   4
+     2.3.  MORE EXAMPLES . . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Pitfalls  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.1.  Server overload . . . . . . . . . . . . . . . . . . . . .   5
+     3.2.  Longevity of identifiers  . . . . . . . . . . . . . . . .   5
+     3.3.  Redirect ambiguities  . . . . . . . . . . . . . . . . . .   5
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   5.  Security considerations . . . . . . . . . . . . . . . . . . .   6
+   6.  Privacy considerations  . . . . . . . . . . . . . . . . . . .   6
+   7.  Informative References  . . . . . . . . . . . . . . . . . . .   6
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
    (Please see abstract.)
+
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 2]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
 
 1.1.  Terminology
 
@@ -139,6 +158,17 @@ Table of Contents
 
    Many protocols based on XML or JSON include a protocol or protocol
    version identifier in the heading to a data item.
+
+
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 3]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
 
    E.g., [JSO] defines a language for data models that contain an
    identifier to the language version in use, here https://json-
@@ -186,6 +216,16 @@ Table of Contents
    |  Registrations MAY use the prefix "https://iana.org/assignments/
    |  http-problem-types#" for the type URI.
 
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 4]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
+
    A reference to the place where registrations for these items are
    managed is certainly desirable, however, the implications on the
    management of fragment identifiers in the HTML documents that IANA
@@ -232,6 +272,15 @@ Table of Contents
    Dereferencing an identifier may involve following some redirections;
    whether that following is actually implied, or desired (or even
    desirable) is rarely being discussed.
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 5]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
 
 4.  IANA Considerations
 
@@ -281,6 +330,14 @@ Table of Contents
               RFC 4151, DOI 10.17487/RFC4151, October 2005,
               <https://www.rfc-editor.org/rfc/rfc4151>.
 
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 6]
+
+Internet-Draft         dereferenceable identifiers         December 2023
+
+
 Acknowledgements
 
    Christian Amsüss pointed out that this document would be good to
@@ -300,3 +357,36 @@ Authors' Addresses
    Christian Amsüss
    Austria
    Email: christian@amsuess.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann & Amsüss          Expires 21 June 2024                  [Page 7]
