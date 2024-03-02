@@ -98,7 +98,7 @@ Operator:
   dereferenceable identifier.
 
 Consumer:
-: An entity that receives data containing a dereferencable identifier.
+: An entity that receives data containing a dereferenceable identifier.
 
 Directed:
 : A directed identifier is an identifier that has been specifically
@@ -267,7 +267,7 @@ Privacy implications, in particular around single-use identifiers, are discussed
 Usage patterns between dereferencing and precise matching
 =========================================================
 
-Consumers do not face a binary choice between dereferencing dereferencable identifiers and treating them as opaque.
+Consumers do not face a binary choice between dereferencing dereferenceable identifiers and treating them as opaque.
 The space between those extremes is continuous.
 Notable steps consumers can take to mitigate pitfalls of dereferencing are:
 
@@ -292,8 +292,8 @@ Notable steps consumers can take to mitigate pitfalls of dereferencing are:
    In its extreme form, the consumer may not even be equipped to dereference any identifiers
    outside of its cache,
    and the dereferenced representation may already be part of the firmware in ingested form to save runtime resources.
-   Such a consumer shares its properties with a consumer that treats dereferencable identifiers as opaque.
-   However, the authors of the firmware can make good use of the dereferencable identifiers.
+   Such a consumer shares its properties with a consumer that treats dereferenceable identifiers as opaque.
+   However, the authors of the firmware can make good use of the dereferenceable identifiers.
    For example, they can dereference a known (or spidered) set of identifiers in an automated fashion,
    with any suitable amount of caching or manual verification.
 
@@ -326,7 +326,7 @@ visible to the operator of the identifier.
 Moreover, the operator might gain additional data about the requester,
 e.g. from a User-Agent header.
 
-By minting directed (e.g., single-use) dereferencable identifiers
+By minting directed (e.g., single-use) dereferenceable identifiers
 and assigning short cache lifetimes to the dereferenced resource,
 the originator of a document can track dereferencing clients
 whenever they process the document the identifier has been created for.
