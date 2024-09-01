@@ -5,7 +5,7 @@
 Thing-to-Thing Research Group                                 C. Bormann
 Internet-Draft                                    Universität Bremen TZI
 Intended status: Informational                                 C. Amsüss
-Expires: 3 September 2024                                   2 March 2024
+Expires: 2 March 2025                                     29 August 2024
 
 
                 The "dereferenceable identifier" pattern
@@ -24,10 +24,7 @@ Abstract
    when encountering such a URI.
 
 
-   // The present -03 revision discusses the continuum between entirely
-   // relying on the result of dereferencing an identifier and building
-   // in knowledge of all expected identifiers, and it mentions further
-   // pitfalls of using dereferenceable identifiers.
+   // The present revision -04 includes a few clarifications.
 
 About This Document
 
@@ -49,26 +46,24 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
-
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 1]
-
-Internet-Draft         dereferenceable identifiers            March 2024
-
-
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+
+
+Bormann & Amsüss          Expires 2 March 2025                  [Page 1]
+
+Internet-Draft         dereferenceable identifiers           August 2024
+
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2024.
+   This Internet-Draft will expire on 2 March 2025.
 
 Copyright Notice
 
@@ -83,7 +78,7 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Examples for "dereferenceable identifiers"  . . . . . . . . .   3
      2.1.  Protocol and Protocol Version identifiers . . . . . . . .   4
@@ -97,26 +92,27 @@ Table of Contents
      3.5.  Other pitfalls  . . . . . . . . . . . . . . . . . . . . .   6
    4.  Usage patterns between dereferencing and precise matching . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-   6.  Security considerations . . . . . . . . . . . . . . . . . . .   7
+   6.  Security considerations . . . . . . . . . . . . . . . . . . .   8
    7.  Privacy considerations  . . . . . . . . . . . . . . . . . . .   8
-   8.  Informative References  . . . . . . . . . . . . . . . . . . .   8
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   8
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
-
-
-
-
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 2]
-
-Internet-Draft         dereferenceable identifiers            March 2024
-
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
    (Please see abstract.)
+
+
+
+
+
+
+Bormann & Amsüss          Expires 2 March 2025                  [Page 2]
+
+Internet-Draft         dereferenceable identifiers           August 2024
+
 
 1.1.  Terminology
 
@@ -154,7 +150,11 @@ Internet-Draft         dereferenceable identifiers            March 2024
       entity; i.e., no other identifiers are in use (or intended to be
       in use).
 
-   {::boilerplate bcp14-tagged-bcp}
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   [BCP14] (RFC2119) (RFC8174) when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Examples for "dereferenceable identifiers"
 
@@ -165,9 +165,9 @@ Internet-Draft         dereferenceable identifiers            March 2024
 
 
 
-Bormann & Amsüss        Expires 3 September 2024                [Page 3]
+Bormann & Amsüss          Expires 2 March 2025                  [Page 3]
 
-Internet-Draft         dereferenceable identifiers            March 2024
+Internet-Draft         dereferenceable identifiers           August 2024
 
 
 2.1.  Protocol and Protocol Version identifiers
@@ -221,9 +221,9 @@ Internet-Draft         dereferenceable identifiers            March 2024
 
 
 
-Bormann & Amsüss        Expires 3 September 2024                [Page 4]
+Bormann & Amsüss          Expires 2 March 2025                  [Page 4]
 
-Internet-Draft         dereferenceable identifiers            March 2024
+Internet-Draft         dereferenceable identifiers           August 2024
 
 
    |  Registrations MAY use the prefix "https://iana.org/assignments/
@@ -277,9 +277,9 @@ Internet-Draft         dereferenceable identifiers            March 2024
 
 
 
-Bormann & Amsüss        Expires 3 September 2024                [Page 5]
+Bormann & Amsüss          Expires 2 March 2025                  [Page 5]
 
-Internet-Draft         dereferenceable identifiers            March 2024
+Internet-Draft         dereferenceable identifiers           August 2024
 
 
 3.3.  Breakage due to incompatible changes
@@ -322,21 +322,31 @@ Internet-Draft         dereferenceable identifiers            March 2024
 
 4.  Usage patterns between dereferencing and precise matching
 
-   Consumers do not face a binary choice between dereferencing
-   dereferenceable identifiers and treating them as opaque.  The space
-   between those extremes is continuous.  Notable steps consumers can
-   take to mitigate pitfalls of dereferencing are:
+   Consumers may choose to:
+
+   *  dereference a dereferenceable identifier and, in place of the
+      dereferenceable identifier, using only the information retrieved
+      this way, or
+
+   *  treat the dereferenceable identifier as opaque.
+
+
+
+
+Bormann & Amsüss          Expires 2 March 2025                  [Page 6]
+
+Internet-Draft         dereferenceable identifiers           August 2024
+
+
+   Consumers do not face a binary choice between either; the space
+   between those extremes is continuous.
+
+   Notable steps consumers can take to mitigate pitfalls of
+   dereferencing are:
 
    1.  Consumers that dereference may apply caching, which reduces
        server load and bridges both outages and misconfigurations on the
        server side.
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 6]
-
-Internet-Draft         dereferenceable identifiers            March 2024
-
 
        These caches may adhere to the caching rules of the underlying
        systems (DNS result life times, HTTP's freshness rules), but may
@@ -346,13 +356,14 @@ Internet-Draft         dereferenceable identifiers            March 2024
    2.  Consumers may use caching proxy services provided by trusted
        parties.
 
-       While this increases the susceptibility to service outages, it
-       immediately mitigates the privacy implications of having the
-       consumer's network address visible to the operator.  Restrictive
-       policies at the proxy can further mitigate other issues.  For
-       example, if the proxy's cache is eagerly populated by web spider
-       operations from public starting points and only ever serves
-       cached results to consumers, it defends against single-use URIs.
+       While this may have an impact on the susceptibility to service
+       outages, it immediately mitigates the privacy implications of
+       having the consumer's network address visible to the operator.
+       Restrictive policies at the proxy can further mitigate other
+       issues.  For example, if the proxy's cache is eagerly populated
+       by web spider operations from public starting points and only
+       ever serves cached results to consumers, it defends against
+       single-use URIs.
 
    3.  Consumer caches may be pre-populated as part of their firmware
        update mechanisms.
@@ -374,6 +385,15 @@ Internet-Draft         dereferenceable identifiers            March 2024
    that IANA resources might be a good target for a certain class of
    dereferenceable identifiers.
 
+
+
+
+
+Bormann & Amsüss          Expires 2 March 2025                  [Page 7]
+
+Internet-Draft         dereferenceable identifiers           August 2024
+
+
 6.  Security considerations
 
    The ability to create a denial of service attack by pointing a
@@ -383,16 +403,6 @@ Internet-Draft         dereferenceable identifiers            March 2024
    attacks.  A problem with such recommendations is that they need to be
    followed by implementations that are using dereferenceable
    identifiers, which might not care much.
-
-
-
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 7]
-
-Internet-Draft         dereferenceable identifiers            March 2024
-
 
 7.  Privacy considerations
 
@@ -410,10 +420,35 @@ Internet-Draft         dereferenceable identifiers            March 2024
    from originators whose network access is restricted through
    dereferencing clients.
 
-8.  Informative References
+8.  References
+
+8.1.  Normative References
+
+   [BCP14]    Best Current Practice 14,
+              <https://www.rfc-editor.org/info/bcp14>.
+              At the time of writing, this BCP comprises the following:
+
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+              Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+8.2.  Informative References
 
    [COOL]     Sauermann, L. and R. Cyganiak, "Cool URIs for the Semantic
               Web", 3 December 2008, <https://www.w3.org/TR/cooluris/>.
+
+
+
+
+Bormann & Amsüss          Expires 2 March 2025                  [Page 8]
+
+Internet-Draft         dereferenceable identifiers           August 2024
+
 
    [HTML5]    WHATWG, "HTML — Living Standard", n.d.,
               <https://html.spec.whatwg.org>.
@@ -438,17 +473,6 @@ Acknowledgements
    have.
 
 Authors' Addresses
-
-
-
-
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 8]
-
-Internet-Draft         dereferenceable identifiers            March 2024
-
 
    Carsten Bormann
    Universität Bremen TZI
@@ -477,28 +501,4 @@ Internet-Draft         dereferenceable identifiers            March 2024
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann & Amsüss        Expires 3 September 2024                [Page 9]
+Bormann & Amsüss          Expires 2 March 2025                  [Page 9]
