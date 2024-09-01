@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2024-03-02
+date: 2024-08-29
 
 keyword: Internet-Draft
 cat: info
@@ -63,10 +63,7 @@ URI.
 
 [^status]
 
-[^status]: The present -03 revision discusses the continuum between
-    entirely relying on the result of dereferencing an identifier and
-    building in knowledge of all expected identifiers, and it mentions
-    further pitfalls of using dereferenceable identifiers.
+[^status]: The present revision -04 includes a few clarifications.
 
 --- middle
 
@@ -115,7 +112,7 @@ Unique:
 : A unique identifier is an identifier that is unique for the entity;
   i.e., no other identifiers are in use (or intended to be in use).
 
-{::boilerplate bcp14-tagged-bcp}
+{::boilerplate bcp14-tagged-bcp14}
 
 Examples for "dereferenceable identifiers" {#examples}
 ======================
@@ -269,8 +266,16 @@ Privacy implications, in particular around single-use identifiers, are discussed
 Usage patterns between dereferencing and precise matching
 =========================================================
 
-Consumers do not face a binary choice between dereferencing dereferenceable identifiers and treating them as opaque.
-The space between those extremes is continuous.
+Consumers may choose to:
+
+* dereference a dereferenceable identifier and, in place of the
+  dereferenceable identifier, using only the information retrieved
+  this way, or
+* treat the dereferenceable identifier as opaque.
+
+Consumers do not face a binary choice between either;
+the space between those extremes is continuous.
+
 Notable steps consumers can take to mitigate pitfalls of dereferencing are:
 
 1. Consumers that dereference may apply caching,
@@ -282,7 +287,7 @@ Notable steps consumers can take to mitigate pitfalls of dereferencing are:
 
 2. Consumers may use caching proxy services provided by trusted parties.
 
-   While this increases the susceptibility to service outages,
+   While this may have an impact on the susceptibility to service outages,
    it immediately mitigates the privacy implications of having the consumer's network address visible to the operator.
    Restrictive policies at the proxy can further mitigate other issues.
    For example, if the proxy's cache is eagerly populated by web spider operations from public starting points
