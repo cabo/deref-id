@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-11-10T01:12:02.371497+00:00",
+  "timestamp": "2025-03-04T01:09:38.770332+00:00",
   "repo": "cabo/deref-id",
   "labels": [
     {
@@ -55,14 +55,30 @@
       "id": "I_kwDOIYMczs5Vx_BN",
       "title": "The dereference-hardcoded continuum",
       "url": "https://github.com/cabo/deref-id/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chrysn",
-      "authorAssociation": "NONE",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I don't know how to put it in text yet (otherwise this'd be a PR), but I'd like to capture a concept here:\r\n\r\nOne is tempted to place consumers of data that contains identifiers into two categories: those that dereference, and those that have hard-coded knowledge of the identifiers' meanings. I think this is oversimplifying, as there is really a continuum:\r\n\r\n1. The consumer dereferences on every use.\r\n2. The consumer dereferences but caches.\r\n3. The consumer dereferences through a caching proxy (that does not include any Forwarded-For or similar headers).\r\n4. The consumer dereferences through a caching proxy that has the same authentication requirements as the consumer's firmware update server.\r\n5. The caching proxy only allows access to URIs advertised in some public directory (possibly eagerly caching them).\r\n6. The caching proxy only allows access to whitelisted URIs.\r\n7. The caching proxy filters the content of dereferenced representations down to what the consumer is known to process.\r\n8. The caching proxy serves representations managed by the firmware authors.\r\n9. The caching proxy converts the representations into a format custom to the consumer (for example a .so / .dll library)\r\n10. When the consumer firmware is built, it is pre-provisioned with cache entries from the proxy.\r\n11. The semantics of all relevant identifiers are hardcoded into the firmware.\r\n\r\nSomewhere around 5 the client is as good as hardcoded against the privacy thread model of the document author tracking users (while retaining the ability of authors to create identifiers on demand), and at 10 even against the firmware author's tracking (although the firmware author likely has other means anyway).\r\n\r\nA large part of this are cache lifetimes. Hardcoding identifiers' semantics as in 11 is equivalent to the developer asserting that the document has infinite validity over time; anything starting from 3/4 may also start making such (possibly unfounded) assertions. Conversely, identifier authors can support good use of their descriptive resources by giving them long lifetimes (a bit easier on HTTP than on CoAP b/c HTTP clients can re-validate). Long lifetimes would also solve the longevity issue, except that an HTTP advertised Max-Age of a century would really need to be bounded to how long the owner of the DNS name is guaranteed control over that name (can one even pay for names many years ahead? Even if so, how long are the operators' contracts with ICANN?). Well, at least the intention can be documented in there.",
       "createdAt": "2022-11-07T23:40:08Z",
-      "updatedAt": "2022-11-07T23:40:08Z",
+      "updatedAt": "2024-03-02T10:04:23Z",
+      "closedAt": "2024-03-02T10:04:23Z",
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOIYMczs6h0xgl",
+      "title": "Add RFC 8409 example",
+      "url": "https://github.com/cabo/deref-id/issues/4",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Archived-At: <https://mailarchive.ietf.org/arch/msg/rswg/OggOUX8Ow3-o1L2VlTzkpJPIQco>\r\n\r\nhttps://www.rfc-editor.org/errata/eid8196",
+      "createdAt": "2024-12-03T12:57:16Z",
+      "updatedAt": "2024-12-03T12:58:04Z",
       "closedAt": null,
       "comments": []
     }
@@ -95,6 +111,114 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOIYMczs5odvRT",
+      "title": "More pitfalls, more privacy, continuum",
+      "url": "https://github.com/cabo/deref-id/pull/3",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds a section on how the continuous space between dereferencing and opaque identifiers enabled by dereferencable identifiers, text around the pitfalls (what can go wrong when things do change, and forward referencing seccons/privcons for smoother reading given the new section would otherwise reach ahead), and adds a privacy note on data exfiltration.\r\n\r\nCloses: https://github.com/cabo/deref-id/issues/2\r\n\r\nThe branch name is a bit of a misnomer; originally I thought the text would more focus on advantages of dereferencable identifiers (that you can extend vocabularies behind them), but looking at the general tone of the document, it seems a bit like we're not so much advertising why deref-ids are good (because making use of that will trigger the pitfalls), but why they're not bad, and how they allow each user to deref as much as works for their use case.",
+      "createdAt": "2024-03-02T00:46:42Z",
+      "updatedAt": "2024-03-02T10:04:51Z",
+      "baseRepository": "cabo/deref-id",
+      "baseRefName": "main",
+      "baseRefOid": "5181980ad31fed76dd230d5556b016ef883dd168",
+      "headRepository": "chrysn-pull-requests/deref-id",
+      "headRefName": "evolution",
+      "headRefOid": "03a1c179a84571cfc8d14128391c61925ae7998c",
+      "closedAt": "2024-03-02T10:04:22Z",
+      "mergedAt": "2024-03-02T10:04:22Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "4c1eed9e26ef08037c5968ac38ad28d5cfede695"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Applied your suggestions and made changes to address your comments.",
+          "createdAt": "2024-03-02T09:36:52Z",
+          "updatedAt": "2024-03-02T09:36:52Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOIYMczs5x_5u3",
+          "commit": {
+            "abbreviatedOid": "724b155"
+          },
+          "author": "cabo",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "Thanks!  Good points.",
+          "createdAt": "2024-03-02T04:45:07Z",
+          "updatedAt": "2024-03-02T04:52:07Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "?",
+              "createdAt": "2024-03-02T04:45:07Z",
+              "updatedAt": "2024-03-02T04:52:07Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "```suggestion\r\n  but may also stretch them if the alternative are failures or treating the identifier as opaque.\r\n```\r\n\r\nI'm not sure you can exceed a rule, but you certainly can stretch it.",
+              "createdAt": "2024-03-02T04:48:29Z",
+              "updatedAt": "2024-03-02T04:52:07Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "Maybe also mention that compile-time processing can save runtime resources",
+              "createdAt": "2024-03-02T04:51:18Z",
+              "updatedAt": "2024-03-02T04:52:07Z"
+            },
+            {
+              "originalPosition": 66,
+              "body": "Would a numbered list work here?\r\nMakes it easier to discuss the stages on the continuum",
+              "createdAt": "2024-03-02T04:51:52Z",
+              "updatedAt": "2024-03-02T04:52:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOIYMczs5yADOG",
+          "commit": {
+            "abbreviatedOid": "724b155"
+          },
+          "author": "chrysn",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-02T08:43:27Z",
+          "updatedAt": "2024-03-02T08:43:28Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "I've been looking for a way to phrase \"this is a continuous path, and we're not going through every turn and corner because #2 listed 12 thereof, but here  are enough landmarks that you see the full path\"; will try to rephrase.",
+              "createdAt": "2024-03-02T08:43:28Z",
+              "updatedAt": "2024-03-02T08:43:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOIYMczs5yAIMF",
+          "commit": {
+            "abbreviatedOid": "03a1c17"
+          },
+          "author": "cabo",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-02T10:04:10Z",
+          "updatedAt": "2024-03-02T10:04:10Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
