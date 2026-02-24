@@ -5,7 +5,7 @@
 Thing-to-Thing Research Group                                 C. Bormann
 Internet-Draft                                    Universität Bremen TZI
 Intended status: Informational                                 C. Amsüss
-Expires: 4 September 2025                                   3 March 2025
+Expires: 28 August 2026                                 24 February 2026
 
 
                 The "dereferenceable identifier" pattern
@@ -22,9 +22,6 @@ Abstract
    associated with a meaning, some of these URIs are in principle
    _dereferenceable_, so something can be placed that can be retrieved
    when encountering such a URI.
-
-
-   // The present revision -04 includes a few clarifications.
 
 About This Document
 
@@ -53,9 +50,12 @@ Status of This Memo
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 1]
+
+
+
+Bormann & Amsüss         Expires 28 August 2026                 [Page 1]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,11 +63,11 @@ Internet-Draft         dereferenceable identifiers            March 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 September 2025.
+   This Internet-Draft will expire on 28 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 2]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 2]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
 1.1.  Terminology
@@ -165,9 +165,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 3]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 3]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
 2.1.  Protocol and Protocol Version identifiers
@@ -221,9 +221,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 4]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 4]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
    |  Registrations MAY use the prefix "https://iana.org/assignments/
@@ -277,9 +277,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 5]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 5]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
 3.3.  Breakage due to incompatible changes
@@ -333,9 +333,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 6]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 6]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
    Consumers do not face a binary choice between either; the space
@@ -389,9 +389,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 7]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 7]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
 6.  Security considerations
@@ -445,9 +445,9 @@ Internet-Draft         dereferenceable identifiers            March 2025
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 8]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 8]
 
-Internet-Draft         dereferenceable identifiers            March 2025
+Internet-Draft         dereferenceable identifiers         February 2026
 
 
    [HTML5]    WHATWG, "HTML — Living Standard", n.d.,
@@ -501,4 +501,4 @@ Authors' Addresses
 
 
 
-Bormann & Amsüss        Expires 4 September 2025                [Page 9]
+Bormann & Amsüss         Expires 28 August 2026                 [Page 9]
