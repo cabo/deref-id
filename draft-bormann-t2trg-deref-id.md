@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2025-08-31
+date: 2026-02-24
 
 keyword: Internet-Draft
 cat: info
@@ -64,7 +64,7 @@ URI.
 <!--
 [^status]
 
-[^status]: The present revision -04 includes a few clarifications.
+[^status]: present revision: -07
  -->
 
 --- middle
