@@ -5,7 +5,7 @@ title: >
   The "dereferenceable identifier" pattern
 abbrev: dereferenceable identifiers
 docname: draft-bormann-t2trg-deref-id-latest
-date: 2025-03-03
+date: 2025-08-31
 
 keyword: Internet-Draft
 cat: info
@@ -61,9 +61,11 @@ meaning, some of these URIs are in principle *dereferenceable*, so
 something can be placed that can be retrieved when encountering such a
 URI.
 
+<!--
 [^status]
 
 [^status]: The present revision -04 includes a few clarifications.
+ -->
 
 --- middle
 
